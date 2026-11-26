@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Projects | Share & Explore</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ font-family:Arial,sans-serif;
+ background:#f4f6fb;
+ color:#172033;
+}
+header{
+ background:linear-gradient(120deg,#111b40,#5145b9);
+ color:white;padding:25px 7%;
+ display:flex;justify-content:space-between;
+ align-items:center;flex-wrap:wrap;gap:15px;
+}
+.logo{font-size:27px;font-weight:900;letter-spacing:1px}
+.logo span{color:#a9b4ff}
+nav{display:flex;gap:10px;flex-wrap:wrap}
+button{
+ border:0;padding:11px 17px;border-radius:9px;
+ cursor:pointer;font-weight:bold;font-size:14px;
+ transition:.2s;
+}
+button:hover{opacity:.85;transform:translateY(-1px)}
+.navbtn{background:#ffffff20;color:white}
+.primary{background:#5145d9;color:white}
+.secondary{background:#e8eaff;color:#4036a5}
+.danger{background:#ffe5e5;color:#c62828}
+.container{max-width:1100px;margin:auto;padding:30px 18px}
+.hero{
+ background:linear-gradient(120deg,#18244f,#6555d9);
+ color:white;padding:45px 30px;border-radius:20px;
+ margin-bottom:30px;
+}
+.hero h1{font-size:36px;margin-bottom:12px}
+.hero p{color:#dce1ff;line-height:1.6}
+.section-title{font-size:25px;margin:25px 0 18px}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+ gap:18px;
+}
+.card{
+ background:white;border-radius:15px;padding:23px;
+ box-shadow:0 4px 18px #1720330b;
+ border:1px solid #e9ebf3;
+}
+.year-card{cursor:pointer;transition:.2s}
+.year-card:hover{transform:translateY(-5px);border-color:#6256d9}
+.year-card h2{color:#4036b2;margin:12px 0}
+.year-card p{color:#737b90;line-height:1.5}
+.icon{font-size:32px}
+.hidden{display:none!important}
+input,textarea,select{
+ width:100%;padding:13px;margin:9px 0 15px;
+ border:1px solid #dce0eb;border-radius:9px;
+ font-size:15px;outline:none;background:white;
+}
+input:focus,textarea:focus,select:focus{border-color:#6555d9}
+label{font-weight:bold;font-size:14px}
+.form-box{max-width:470px;margin:25px auto}
+.form-box h2{margin-bottom:20px}
+.semester{
+ cursor:pointer;text-align:left;
+ padding:20px;border:1px solid #e6e7f1;
+ background:white;border-radius:12px;
+}
+.semester:hover{border-color:#6555d9}
+.project-card{padding:0;overflow:hidden}
+.project-card img{
+ width:100%;height:180px;object-fit:cover;
+ background:#eee;
+}
+.project-content{padding:18px}
+.project-content h3{margin-bottom:8px}
+.project-content p{color:#6e7585;line-height:1.5;white-space:pre-wrap}
+.tag{
+ display:inline-block;background:#ecebff;color:#5045bd;
+ padding:6px 10px;border-radius:20px;
+ font-size:12px;margin:9px 0;
+}
+.meta{font-size:12px;color:#9299a9;margin-top:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actions button{font-size:12px}
+.topline{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;flex-wrap:wrap;
+}
+.empty{
+ text-align:center;padding:45px 15px;color:#8a91a2;
+ background:white;border-radius:15px;
+}
+footer{
+ text-align:center;padding:25px;color:#888;
+ margin-top:40px;border-top:1px solid #e5e7ef;
+}
+.message{color:#c0392b;font-size:13px;margin:5px 0 12px}
+@media(max-width:600px){
+ .hero h1{font-size:27px}
+ header{padding:20px}
+ .logo{font-size:22px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">STUDENT <span>PROJECTS.</span></div>
+ <nav id="navigation">
+  <button class="navbtn" onclick="showPage('home')">Home</button>
+  <button class="navbtn" onclick="explore()">Explore Projects</button>
+  <button class="navbtn" onclick="showPage('login')" id="loginNav">Login</button>
+  <button class="navbtn hidden" onclick="myProjects()" id="myNav">My Projects</button>
+  <button class="navbtn hidden" onclick="logout()" id="logoutNav">Logout</button>
+ </nav>
+</header>
+
+<main class="container">
+
+<!-- HOME -->
+<section id="home">
+ <div class="hero">
+  <h1>Welcome to Student Projects</h1>
+  <p>Discover, Upload and Explore Student Projects.<br>
+  A platform where students share their creativity and ideas.</p>
+  <br>
+  <button class="primary" onclick="explore()">Explore Projects</button>
+  <button class="navbtn" onclick="startUpload()">Upload Your Project</button>
+ </div>
+
+ <h2 class="section-title">Upload Projects</h2>
+ <div class="grid">
+  <div class="card year-card" onclick="openYear(2)">
+   <div class="icon">📘</div>
+   <h2>Second Year</h2>
+   <p>Explore and upload projects from Third and Fourth Semester.</p>
+   <br><button class="primary">Open Second Year →</button>
+  </div>
+
+  <div class="card year-card" onclick="openYear(3)">
+   <div class="icon">📗</div>
+   <h2>Third Year</h2>
+   <p>Explore and upload projects from Fifth and Sixth Semester.</p>
+   <br><button class="primary">Open Third Year →</button>
+  </div>
+ </div>
+</section>
+
+<!-- AUTH -->
+<section id="auth" class="hidden">
+ <div class="card form-box">
+  <h2 id="authTitle">Create Account</h2>
+
+  <div id="nameField">
+   <label>Your Name</label>
+   <input id="name" placeholder="Enter your name">
+  </div>
+
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Enter password">
+
+  <div id="confirmField">
+   <label>Confirm Password</label>
+   <input id="confirm" type="password" placeholder="Confirm password">
+  </div>
+
+  <p class="message" id="authError"></p>
+  <button class="primary" style="width:100%" onclick="submitAuth()" id="authSubmit">Create Account</button>
+
+  <p style="margin-top:18px;text-align:center;font-size:14px">
+   <span id="switchText">Already have an account?</span>
+   <a href="#" onclick="switchAuth();return false" id="switchLink">Login</a>
+  </p>
+ </div>
+</section>
+
+<!-- YEAR -->
+<section id="yearPage" class="hidden">
+ <button class="secondary" onclick="showPage('home')">← Back</button>
+ <h2 class="section-title" id="yearTitle">Second Year</h2>
+ <p style="color:#777;margin-bottom:20px">Select your semester to continue.</p>
+ <div class="grid" id="semesterGrid"></div>
+</section>
+
+<!-- UPLOAD -->
+<section id="uploadPage" class="hidden">
+ <button class="secondary" onclick="openYear(selectedYear)">← Back</button>
+ <div class="card form-box" style="max-width:600px">
+  <h2>Upload Your Project</h2>
+  <p id="uploadSemester" style="color:#6555d9;margin-bottom:18px"></p>
+
+  <label>Project Name</label>
+  <input id="projectName" placeholder="Enter project name">
+
+  <label>Project Image</label>
+  <input type="file" id="projectImage" accept="image/*">
+
+  <label>Project Description</label>
+  <textarea id="description" rows="5" placeholder="Explain your project..."></textarea>
+
+  <p class="message" id="uploadError"></p>
+  <button class="primary" style="width:100%" onclick="uploadProject()">Upload Project</button>
+ </div>
+</section>
+
+<!-- EXPLORE -->
+<section id="explorePage" class="hidden">
+ <div class="topline">
+  <h2 class="section-title">Explore Projects</h2>
+  <button class="secondary" onclick="showPage('home')">Home</button>
+ </div>
+
+ <input id="search" placeholder="🔍 Search projects..." oninput="renderProjects()">
+
+ <div class="grid" id="projectGrid"></div>
+ <div id="emptyExplore" class="empty hidden">
+  <h2>📂 No Projects Found</h2>
+  <p>Be the first student to upload a project!</p>
+ </div>
+</section>
+
+<!-- MY PROJECTS -->
+<section id="myPage" class="hidden">
+ <div class="topline">
+  <h2 class="section-title">My Projects</h2>
+  <button class="secondary" onclick="showPage('home')">Home</button>
+ </div>
+ <div class="grid" id="myGrid"></div>
+ <div id="emptyMine" class="empty hidden">You haven't uploaded any projects yet.</div>
+</section>
+
+</main>
+
+<footer>
+ <b>STUDENT PROJECTS</b>
+ <p style="margin-top:8px">Share Your Projects. Inspire Others.</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let currentUser = localStorage.getItem("sp_current") || "";
+let authMode = "signup";
+let selectedYear = 2;
+let selectedSemester = 3;
+
+function getUsers(){
+ return JSON.parse(localStorage.getItem("sp_users") || "{}");
+}
+function getProjects(){
+ return JSON.parse(localStorage.getItem("sp_projects") || "[]");
+}
+function saveProjects(data){
+ localStorage.setItem("sp_projects",JSON.stringify(data));
+}
+
+function showPage(page){
+ ["home","auth","yearPage","uploadPage","explorePage","myPage"]
+ .forEach(id=>$(id).classList.add("hidden"));
+
+ const map={
+  home:"home",login:"auth",year:"yearPage",
+  upload:"uploadPage",explore:"explorePage",my:"myPage"
+ };
+ $(map[page]).classList.remove("hidden");
+ window.scrollTo(0,0);
+ updateNav();
+}
+
+function updateNav(){
+ $("loginNav").classList.toggle("hidden",!!currentUser);
+ $("myNav").classList.toggle("hidden",!currentUser);
+ $("logoutNav").classList.toggle("hidden",!currentUser);
+}
+
+function switchAuth(){
+ authMode=authMode==="signup"?"login":"signup";
+ $("authTitle").textContent=authMode==="signup"?"Create Account":"Student Login";
+ $("authSubmit").textContent=authMode==="signup"?"Create Account":"Login";
+ $("confirmField").classList.toggle("hidden",authMode==="login");
+ $("nameField").classList.toggle("hidden",authMode==="login");
+ $("switchText").textContent=authMode==="signup"?"Already have an account?":"Don't have an account?";
+ $("switchLink").textContent=authMode==="signup"?"Login":"Create Account";
+ $("authError").textContent="";
+}
+
+function submitAuth(){
+ let users=getUsers();
+ let password=$("password").value.trim();
+
+ if(authMode==="signup"){
+  let name=$("name").value.trim();
+  let confirm=$("confirm").value.trim();
+  if(!name || !password || !confirm){
+   return $("authError").textContent="Please fill all fields.";
+  }
+  if(password.length<6){
+   return $("authError").textContent="Password must be at least 6 characters.";
+  }
+  if(password!==confirm){
+   return $("authError").textContent="Passwords do not match.";
+  }
+  let key=name.toLowerCase();
+  if(users[key]){
+   return $("authError").textContent="This name is already registered.";
+  }
+  users[key]={name,password};
+  localStorage.setItem("sp_users",JSON.stringify(users));
+  currentUser=key;
+ }else{
+  let name=$("name").value.trim().toLowerCase();
+  if(!users[name] || users[name].password!==password){
+   return $("authError").textContent="Incorrect name or password.";
+  }
+  currentUser=name;
+ }
+ localStorage.setItem("sp_current",currentUser);
+ $("password").value="";
+ $("confirm").value="";
+ $("name").value="";
+ showPage("home");
+}
+
+function logout(){
+ currentUser="";
+ localStorage.removeItem("sp_current");
+ showPage("home");
+}
+
+function startUpload(){
+ if(!currentUser){
+  authMode="login";
+  switchAuth();
+  showPage("login");
+  return;
+ }
+ openYear(2);
+}
+
+function openYear(year){
+ selectedYear=year;
+ $("yearTitle").textContent=year===2?"Second Year":"Third Year";
+ let semesters=year===2?[3,4]:[5,6];
+
+ $("semesterGrid").innerHTML=semesters.map(s=>`
+  <button class="semester" onclick="openSemester(${s})">
+   <h2>📚 ${s===3?"Third":s===4?"Fourth":s===5?"Fifth":"Sixth"} Semester</h2>
+   <p style="color:#888;margin-top:8px">View and upload projects →</p>
+  </button>
+ `).join("");
+ showPage("year");
+}
+
+function openSemester(semester){
+ selectedSemester=semester;
+ if(!currentUser){
+  authMode="login";
+  switchAuth();
+  return showPage("login");
+ }
+ $("uploadSemester").textContent=
+  (selectedYear===2?"Second Year":"Third Year")+
+  " | "+semester+" Semester";
+ $("uploadError").textContent="";
+ showPage("upload");
+}
+
+function uploadProject(){
+ if(!currentUser)return showPage("login");
+
+ let name=$("projectName").value.trim();
+ let description=$("description").value.trim();
+ let file=$("projectImage").files[0];
+
+ if(!name || !description || !file){
+  return $("uploadError").textContent="Please fill all fields and select a photo.";
+ }
+ if(!file.type.startsWith("image/")){
+  return $("uploadError").textContent="Please select an image file.";
+ }
+ if(file.size>1.5*1024*1024){
+  return $("uploadError").textContent="Image must be smaller than 1.5 MB.";
+ }
+
+ let reader=new FileReader();
+ reader.onload=function(){
+  try{
+   let projects=getProjects();
+   projects.unshift({
+    id:Date.now(),
+    name,
+    description,
+    image:reader.result,
+    year:selectedYear,
+    semester:selectedSemester,
+    author:getUsers()[currentUser].name,
+    owner:currentUser,
+    date:new Date().toLocaleDateString()
+   });
+   saveProjects(projects);
+   $("projectName").value="";
+   $("description").value="";
+   $("projectImage").value="";
+   alert("Project uploaded successfully!");
+   explore();
+  }catch(e){
+   $("uploadError").textContent="Storage full. Try a smaller image or delete old projects.";
+  }
+ };
+ reader.readAsDataURL(file);
+}
+
+function explore(){
+ $("search").value="";
+ renderProjects();
+ showPage("explore");
+}
+
+function makeProjectCard(p,showDelete=false){
+ let card=document.createElement("div");
+ card.className="card project-card";
+
+ let img=document.createElement("img");
+ img.src=p.image;
+ img.alt="Project image";
+ card.appendChild(img);
+
+ let content=document.createElement("div");
+ content.className="project-content";
+
+ let h=document.createElement("h3");
+ h.textContent=p.name;
+ content.appendChild(h);
+
+ let tag=document.createElement("span");
+ tag.className="tag";
+ tag.textContent=(p.year===2?"Second Year":"Third Year")+" • "+p.semester+" Semester";
+ content.appendChild(tag);
+
+ let desc=document.createElement("p");
+ desc.textContent=p.description;
+ content.appendChild(desc);
+
+ let meta=document.createElement("div");
+ meta.className="meta";
+ meta.textContent="Uploaded by "+p.author+" • "+p.date;
+ content.appendChild(meta);
+
+ if(showDelete && p.owner===currentUser){
+  let actions=document.createElement("div");
+  actions.className="actions";
+  let del=document.createElement("button");
+  del.className="danger";
+  del.textContent="Delete Project";
+  del.onclick=()=>deleteProject(p.id);
+  actions.appendChild(del);
+  content.appendChild(actions);
+ }
+ card.appendChild(content);
+ return card;
+}
+
+function renderProjects(){
+ let q=$("search").value.toLowerCase();
+ let projects=getProjects().filter(p=>
+  p.name.toLowerCase().includes(q) ||
+  p.description.toLowerCase().includes(q) ||
+  p.author.toLowerCase().includes(q)
+ );
+ $("projectGrid").replaceChildren();
+ projects.forEach(p=>$("projectGrid").appendChild(makeProjectCard(p)));
+ $("emptyExplore").classList.toggle("hidden",projects.length!==0);
+}
+
+function myProjects(){
+ if(!currentUser)return showPage("login");
+ let mine=getProjects().filter(p=>p.owner===currentUser);
+ $("myGrid").replaceChildren();
+ mine.forEach(p=>$("myGrid").appendChild(makeProjectCard(p,true)));
+ $("emptyMine").classList.toggle("hidden",mine.length!==0);
+ showPage("my");
+}
+
+function deleteProject(id){
+ if(!confirm("Are you sure you want to delete this project?"))return;
+ saveProjects(getProjects().filter(p=>p.id!==id));
+ myProjects();
+}
+
+if(currentUser && !getUsers()[currentUser]){
+ currentUser="";
+ localStorage.removeItem("sp_current");
+}
+updateNav();
+showPage("home");
+</script>
+
+</body>
+</html>
